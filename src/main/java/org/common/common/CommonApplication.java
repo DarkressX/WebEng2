@@ -24,8 +24,7 @@ public class CommonApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	/*
-	@Bean
+/*	@Bean
 	CommandLineRunner run(UserService userService)
 	{
 		return args ->
@@ -38,7 +37,6 @@ public class CommonApplication {
 			userService.addRoleToUser("darkress", "ROLE_USER");
 			userService.addRoleToUser("darkress", "ROLE_ADMIN");
 		};
-	}
-	 */
+	}*/
 
 }
