@@ -1,19 +1,20 @@
-package org.common.common.model;
+package org.assets.model;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
-@Table(name="building")
+@Table(name="buildings")
 public class Building
 {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String name;
 
     private String address;
 
-    public Building(Long id, String name, String address)
+    public Building(UUID id, String name, String address)
     {
         this.id = id;
         this.name = name;
@@ -22,14 +23,14 @@ public class Building
 
     public Building(){}
 
-    public Long getId() {return id;}
+    public UUID getId() {return id;}
 
     public String getName() {return name;}
 
     public String getAddress() {return address;}
 
 
-    public void setId(Long id)
+    public void setId(UUID id)
     {
         this.id = id;
     }

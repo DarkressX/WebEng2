@@ -1,10 +1,11 @@
-package org.common.common;
+package org.assets;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CommonApplicationTests {
+class AssetApplicationTests
+{
 
 	@Test
 	void contextLoads() {
