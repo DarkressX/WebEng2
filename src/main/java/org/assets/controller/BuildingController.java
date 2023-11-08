@@ -1,7 +1,6 @@
 package org.assets.controller;
 
-import org.assets.model.Building;
-import org.assets.repository.BuildingRepository;
+import org.assets.model.Buildings;
 import org.assets.service.BuildingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +20,22 @@ public class BuildingController
     }
 
     @GetMapping("/buildings")
-    public ResponseEntity<List<Building>> getBuildings()
+    public ResponseEntity<List<Buildings>> getBuildings()
     {
         return ResponseEntity.ok().body(buildingService.getAllBuildings());
     }
 
     @PostMapping("/buildings")
-    public ResponseEntity<Building> saveBuilding(@RequestBody Building building) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/buildings").toUriString());
-        return ResponseEntity.created(uri).body(buildingService.saveBuilding(building));
+    public ResponseEntity<Buildings> saveBuilding(@RequestBody Buildings buildings) {
+        Buildings newBuilding = buildingService.saveBuilding(buildings);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newBuilding.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(newBuilding);
     }
 
     @GetMapping("/buildings/{id}")
-    public ResponseEntity<Building> getBuildingByID(@PathVariable UUID id) {
+    public ResponseEntity<Buildings> getBuildingByID(@PathVariable UUID id) {
         return ResponseEntity.ok().body(buildingService.getBuildingByID(id));
     }
 }

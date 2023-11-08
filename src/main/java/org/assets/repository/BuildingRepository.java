@@ -1,15 +1,15 @@
 package org.assets.repository;
 
-import org.assets.model.Building;
+import org.assets.model.Buildings;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface BuildingRepository extends JpaRepository<Building, Long>
+public interface BuildingRepository extends JpaRepository<Buildings, UUID>
 {
-    Building findBuildingById(UUID id);
+    Buildings findBuildingById(UUID id);
 
-    Building findBuildingByAddress(String address);
+    Buildings findBuildingByAddress(String address);
 }

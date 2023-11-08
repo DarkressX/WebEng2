@@ -1,6 +1,6 @@
 package org.assets.service;
 
-import org.assets.model.Building;
+import org.assets.model.Buildings;
 import org.assets.repository.BuildingRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +18,15 @@ public class BuildingService
         this.buildingRepository = buildingRepository;
     }
 
-    public List<Building> getAllBuildings() {
+    public List<Buildings> getAllBuildings() {
         return buildingRepository.findAll();
     }
 
-    public Building getBuildingByID(UUID id) {
+    public Buildings getBuildingByID(UUID id) {
         return buildingRepository.findBuildingById(id);
     }
 
-    public Building saveBuilding(Building building) {
-        return buildingRepository.save(building);
+    public Buildings saveBuilding(Buildings buildings) {
+        return buildingRepository.save(buildings);
     }
 }

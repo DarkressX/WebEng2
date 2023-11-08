@@ -5,7 +5,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="buildings")
-public class Building
+public class Buildings
 {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -14,14 +14,14 @@ public class Building
 
     private String address;
 
-    public Building(UUID id, String name, String address)
+    public Buildings(UUID id, String name, String address)
     {
         this.id = id;
         this.name = name;
         this.address = address;
     }
 
-    public Building(){}
+    public Buildings(){}
 
     public UUID getId() {return id;}
 
