@@ -35,11 +35,9 @@ public class BuildingService
 
     public void deleteBuilding(UUID id) throws IllegalArgumentException {
         Buildings building = buildingRepository.findBuildingById(id);
-        if(building == null) {
+        if(building == null || building.getDeletedAt() != null){
             throw new NoSuchElementException();
-        } else if(building.getDeletedAt() != null){
-            throw new IllegalArgumentException();
         }
-        building.setDeletedAt(java.time.LocalDateTime.now());
+        building.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if storeys exist in this building
     }
 }

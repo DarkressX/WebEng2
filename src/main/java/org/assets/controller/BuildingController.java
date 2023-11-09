@@ -48,10 +48,8 @@ public class BuildingController
     public ResponseEntity<Buildings> deleteBuilding(@PathVariable UUID id) {
         try {
             buildingService.deleteBuilding(id);
-        } catch(IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build(); //Already deleted
         } catch(NoSuchElementException e) {
-            return ResponseEntity.notFound().build(); //Building does not exist
+            return ResponseEntity.notFound().build(); //Building does not exist or already deleted
         }
         return ResponseEntity.noContent().build();
     }
