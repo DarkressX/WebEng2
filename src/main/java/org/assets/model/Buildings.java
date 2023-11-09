@@ -1,9 +1,13 @@
 package org.assets.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name="buildings")
 public class Buildings
 {
@@ -14,11 +18,14 @@ public class Buildings
 
     private String address;
 
-    public Buildings(UUID id, String name, String address)
+    private LocalDateTime deletedAt;
+
+    public Buildings(UUID id, String name, String address, LocalDateTime deletedAt)
     {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.deletedAt = deletedAt;
     }
 
     public Buildings(){}
@@ -29,6 +36,10 @@ public class Buildings
 
     public String getAddress() {return address;}
 
+    public LocalDateTime getDeletedAt()
+    {
+        return deletedAt;
+    }
 
     public void setId(UUID id)
     {
@@ -43,5 +54,10 @@ public class Buildings
     public void setAddress(String address)
     {
         this.address = address;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt)
+    {
+        this.deletedAt = deletedAt;
     }
 }

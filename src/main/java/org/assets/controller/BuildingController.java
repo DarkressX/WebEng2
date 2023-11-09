@@ -2,6 +2,7 @@ package org.assets.controller;
 
 import org.assets.model.Buildings;
 import org.assets.service.BuildingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -36,6 +37,14 @@ public class BuildingController
 
     @GetMapping("/buildings/{id}")
     public ResponseEntity<Buildings> getBuildingByID(@PathVariable UUID id) {
-        return ResponseEntity.ok().body(buildingService.getBuildingByID(id));
+        if (buildingService.getBuildingByID(id) != null) {
+            return ResponseEntity.ok().body(buildingService.getBuildingByID(id));
+        }
+        return ResponseEntity.notFound().build();
     }
+
+/*    @DeleteMapping("/buildings/{id}")
+    public ResponseEntity<Buildings> deleteBuilding(@PathVariable UUID id) {
+        Buildings buildings = buildingService.getBuildingByID(id);
+    }*/
 }
