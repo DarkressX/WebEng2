@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -32,9 +33,11 @@ public class BuildingService
         return buildingRepository.save(buildings);
     }
 
-    public void deleteBuilding(Buildings buildings) throws IllegalArgumentException {
-        Buildings building = buildingRepository.findBuildingById(buildings.getId());
-        if (building.getDeletedAt() != null) {
+    public void deleteBuilding(UUID id) throws IllegalArgumentException {
+        Buildings building = buildingRepository.findBuildingById(id);
+        if(building == null) {
+            throw new NoSuchElementException();
+        } else if(building.getDeletedAt() != null){
             throw new IllegalArgumentException();
         }
         building.setDeletedAt(java.time.LocalDateTime.now());

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @CrossOrigin("*")
@@ -43,8 +44,15 @@ public class BuildingController
         return ResponseEntity.notFound().build();
     }
 
-/*    @DeleteMapping("/buildings/{id}")
+    @DeleteMapping("/buildings/{id}")
     public ResponseEntity<Buildings> deleteBuilding(@PathVariable UUID id) {
-        Buildings buildings = buildingService.getBuildingByID(id);
-    }*/
+        try {
+            buildingService.deleteBuilding(id);
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); //Already deleted
+        } catch(NoSuchElementException e) {
+            return ResponseEntity.notFound().build(); //Building does not exist
+        }
+        return ResponseEntity.noContent().build();
+    }
 }
