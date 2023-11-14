@@ -29,8 +29,14 @@ public class BuildingService
         return buildingRepository.findBuildingById(id);
     }
 
-    public Buildings saveBuilding(Buildings buildings) {
-        return buildingRepository.save(buildings);
+    public Buildings saveBuilding(Buildings newBuilding) {
+        newBuilding.setId(UUID.randomUUID());
+        return buildingRepository.save(newBuilding);
+    }
+
+    public Buildings updateBuildingByID(UUID id, Buildings newBuilding) {
+       newBuilding.setId(id);
+       return buildingRepository.save(newBuilding);
     }
 
     public void deleteBuilding(UUID id) throws IllegalArgumentException {

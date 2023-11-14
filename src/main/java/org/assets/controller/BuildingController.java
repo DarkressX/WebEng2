@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/buildings")
 public class BuildingController
 {
     private final BuildingService buildingService;
@@ -21,13 +22,13 @@ public class BuildingController
         this.buildingService = buildingService;
     }
 
-    @GetMapping("/buildings")
+    @GetMapping("")
     public ResponseEntity<List<Buildings>> getBuildings()
     {
         return ResponseEntity.ok().body(buildingService.getAllBuildings());
     }
 
-    @PostMapping("/buildings")
+    @PostMapping("")
     public ResponseEntity<Buildings> saveBuilding(@RequestBody Buildings buildings) {
         Buildings newBuilding = buildingService.saveBuilding(buildings);
 
@@ -36,7 +37,7 @@ public class BuildingController
         return ResponseEntity.created(uri).body(newBuilding);
     }
 
-    @GetMapping("/buildings/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Buildings> getBuildingByID(@PathVariable UUID id) {
         if (buildingService.getBuildingByID(id) != null) {
             return ResponseEntity.ok().body(buildingService.getBuildingByID(id));
@@ -44,7 +45,7 @@ public class BuildingController
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/buildings/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Buildings> deleteBuilding(@PathVariable UUID id) {
         try {
             buildingService.deleteBuilding(id);
@@ -52,5 +53,15 @@ public class BuildingController
             return ResponseEntity.notFound().build(); //Building does not exist or already deleted
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Buildings> putBuilding(@PathVariable UUID id, @RequestBody Buildings buildings) {
+        if (buildingService.getBuildingByID(id) != null) {
+            return ResponseEntity.ok().body(buildingService.updateBuildingByID(id, buildings));
+        }
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
+        buildings.setId(id);
+        return ResponseEntity.created(uri).body(buildingService.updateBuildingByID(id, buildings));
     }
 }

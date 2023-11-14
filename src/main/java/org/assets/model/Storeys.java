@@ -8,10 +8,10 @@ import java.util.UUID;
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name="buildings")
-public class Buildings
+@Table(name="storeys")
+public class Storeys
 {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String name;
@@ -20,7 +20,7 @@ public class Buildings
 
     private LocalDateTime deletedAt;
 
-    public Buildings(UUID id, String name, String address, LocalDateTime deletedAt)
+    public Storeys(UUID id, String name, String address, LocalDateTime deletedAt)
     {
         this.id = id;
         this.name = name;
@@ -28,7 +28,7 @@ public class Buildings
         this.deletedAt = deletedAt;
     }
 
-    public Buildings(){}
+    public Storeys(){}
 
     public UUID getId() {return id;}
 
