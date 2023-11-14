@@ -1,5 +1,7 @@
 package org.assets.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ public class Buildings
 
     private String address;
 
+    @JsonAlias("deleted_at")
     private LocalDateTime deletedAt;
 
     public Buildings(UUID id, String name, String address, LocalDateTime deletedAt)

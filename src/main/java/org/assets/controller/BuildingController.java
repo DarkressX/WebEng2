@@ -1,16 +1,18 @@
 package org.assets.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assets.model.Buildings;
 import org.assets.service.BuildingService;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 @CrossOrigin("*")
 @RestController
@@ -56,12 +58,31 @@ public class BuildingController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Buildings> putBuilding(@PathVariable UUID id, @RequestBody Buildings buildings) {
-        if (buildingService.getBuildingByID(id) != null) {
-            return ResponseEntity.ok().body(buildingService.updateBuildingByID(id, buildings));
+    public ResponseEntity<Buildings> putBuilding(@PathVariable UUID id, @RequestBody Map<String, Object> requestBody) {
+        Boolean restore = false;
+        Buildings buildings = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            buildings = objectMapper.convertValue(requestBody, Buildings.class);
         }
+        catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if(requestBody.containsKey("deleted_at") && requestBody.get("deleted_at") == null) {
+            restore = true;
+        }
+        if (buildingService.getBuildingByID(id) != null) {
+            try {
+                return ResponseEntity.ok().body(buildingService.updateBuildingByID(id, buildings, restore));
+            }
+            catch(UnsupportedOperationException e) {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
         buildings.setId(id);
-        return ResponseEntity.created(uri).body(buildingService.updateBuildingByID(id, buildings));
+        return ResponseEntity.created(uri).body(buildingService.updateBuildingByID(id, buildings, false));
     }
 }

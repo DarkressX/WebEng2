@@ -34,9 +34,15 @@ public class BuildingService
         return buildingRepository.save(newBuilding);
     }
 
-    public Buildings updateBuildingByID(UUID id, Buildings newBuilding) {
-       newBuilding.setId(id);
-       return buildingRepository.save(newBuilding);
+    public Buildings updateBuildingByID(UUID id, Buildings newBuilding, Boolean restore) {
+        Buildings oldBuilding = buildingRepository.findBuildingById(id);
+        if(oldBuilding != null && oldBuilding.getDeletedAt() != null && !restore) {
+            //Building is deleted but no
+            // restore was requested
+            throw new UnsupportedOperationException();
+        }
+        newBuilding.setId(id);
+        return buildingRepository.save(newBuilding);
     }
 
     public void deleteBuilding(UUID id) throws IllegalArgumentException {
