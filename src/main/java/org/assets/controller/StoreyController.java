@@ -25,13 +25,13 @@ public class StoreyController
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Storeys>> getStoreys(@RequestParam(required = false, defaultValue = "false") Boolean include_deleted, @RequestParam UUID building_id)
+    public ResponseEntity<List<Storeys>> getStoreys(@Valid @RequestParam(required = false, defaultValue = "false") Boolean include_deleted, @RequestParam UUID building_id)
     {
         return ResponseEntity.ok().body(storeyService.getAllStoreys(include_deleted, building_id));
     }
 
     @PostMapping("")
-    public ResponseEntity<Storeys> saveStorey(@RequestBody Storeys storeys) {
+    public ResponseEntity<Storeys> saveStorey(@Valid @RequestBody Storeys storeys) {
         Storeys newStorey;
         try {
             newStorey = storeyService.saveStorey(storeys);

@@ -20,7 +20,8 @@ public class Storeys
     private String name;
 
     @JsonAlias("building_id")
-    //@NotBlank(message = "Building id required")
+    @Column(name = "building_id")
+    @NotBlank(message = "Building id required")
     private UUID buildingID;
 
     @JsonAlias("deleted_at")
