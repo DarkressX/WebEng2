@@ -22,6 +22,7 @@ public class Storeys
     @JsonAlias("building_id")
     @NotBlank(message = "Building id required")
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="building_id")
     private Buildings building;
 
     @JsonAlias("deleted_at")
