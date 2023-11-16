@@ -1,0 +1,26 @@
+meta {
+  name: Update Building
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:8080/api/v2/assets/buildings/151cdeb2-7613-4bac-b5f9-8164820147b8
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"DHBW",
+    "address": "Another address",
+    "deleted_at": null
+  }
+}
+
+tests {
+  test("put new building", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(201);
+  });
+}
