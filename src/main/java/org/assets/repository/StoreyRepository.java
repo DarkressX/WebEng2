@@ -12,7 +12,7 @@ public interface StoreyRepository extends JpaRepository<Storeys, UUID>
 {
     Storeys findStoreyById(UUID id);
 
-    List<Storeys> findAllByBuildingID(UUID building_id);
+    List<Storeys> findAllByBuilding_Id(UUID building_id);
 
-    List<Storeys> findStoreysByDeletedAtIsNullAndBuildingID(UUID building_id);
+    List<Storeys> findStoreysByDeletedAtIsNullAndBuilding_Id(UUID building_id);
 }

@@ -23,11 +23,11 @@ public class StoreyService
         this.buildingRepository = buildingRepository;
     }
 
-    public List<Storeys> getAllStoreys(Boolean deleted_at, UUID building_id) {
-        if(deleted_at) {
-            return storeyRepository.findAllByBuildingID(building_id);
+    public List<Storeys> getAllStoreys(Boolean include_deleted, UUID building_id) {
+        if(include_deleted) {
+            return storeyRepository.findAllByBuilding_Id(building_id);
         }
-        return storeyRepository.findStoreysByDeletedAtIsNullAndBuildingID(building_id);
+        return storeyRepository.findStoreysByDeletedAtIsNullAndBuilding_Id(building_id);
     }
 
     public Storeys getStoreyByID(UUID id) {

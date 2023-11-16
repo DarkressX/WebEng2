@@ -20,18 +20,18 @@ public class Storeys
     private String name;
 
     @JsonAlias("building_id")
-    @Column(name = "building_id")
     @NotBlank(message = "Building id required")
-    private UUID buildingID;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Buildings building;
 
     @JsonAlias("deleted_at")
     private LocalDateTime deletedAt;
 
-    public Storeys(UUID id, String name, UUID buildingID, LocalDateTime deletedAt)
+    public Storeys(UUID id, String name, Buildings building, LocalDateTime deletedAt)
     {
         this.id = id;
         this.name = name;
-        this.buildingID = buildingID;
+        this.building = building;
         this.deletedAt = deletedAt;
     }
 
@@ -48,7 +48,7 @@ public class Storeys
 
     public UUID getBuildingID()
     {
-        return buildingID;
+        return building.getId();
     }
 
     public void setId(UUID id)
@@ -61,9 +61,9 @@ public class Storeys
         this.name = name;
     }
 
-    public void setBuildingID(UUID buildingID)
+    public void setBuilding(Buildings building)
     {
-        this.buildingID = buildingID;
+        this.building = building;
     }
 
     public void setDeletedAt(LocalDateTime deletedAt)
