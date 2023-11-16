@@ -1,8 +1,10 @@
 package org.assets.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,20 +13,24 @@ import java.util.UUID;
 @Table(name="storeys")
 public class Storeys
 {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private UUID id;
 
+    @NotBlank(message = "Storey name is required")
     private String name;
 
-    private String address;
+    @JsonAlias("building_id")
+    //@NotBlank(message = "Building id required")
+    private UUID buildingID;
 
+    @JsonAlias("deleted_at")
     private LocalDateTime deletedAt;
 
-    public Storeys(UUID id, String name, String address, LocalDateTime deletedAt)
+    public Storeys(UUID id, String name, UUID buildingID, LocalDateTime deletedAt)
     {
         this.id = id;
         this.name = name;
-        this.address = address;
+        this.buildingID = buildingID;
         this.deletedAt = deletedAt;
     }
 
@@ -34,11 +40,14 @@ public class Storeys
 
     public String getName() {return name;}
 
-    public String getAddress() {return address;}
-
     public LocalDateTime getDeletedAt()
     {
         return deletedAt;
+    }
+
+    public UUID getBuildingID()
+    {
+        return buildingID;
     }
 
     public void setId(UUID id)
@@ -51,9 +60,9 @@ public class Storeys
         this.name = name;
     }
 
-    public void setAddress(String address)
+    public void setBuildingID(UUID buildingID)
     {
-        this.address = address;
+        this.buildingID = buildingID;
     }
 
     public void setDeletedAt(LocalDateTime deletedAt)
