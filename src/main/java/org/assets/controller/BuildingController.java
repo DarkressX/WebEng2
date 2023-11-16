@@ -7,12 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/buildings")
+@RequestMapping("/api/v2/assets/buildings")
 public class BuildingController
 {
     private final BuildingService buildingService;
@@ -27,7 +28,7 @@ public class BuildingController
     }
 
     @PostMapping("")
-    public ResponseEntity<Buildings> saveBuilding(@RequestBody Buildings buildings) {
+    public ResponseEntity<Buildings> saveBuilding(@Valid @RequestBody Buildings buildings) {
         Buildings newBuilding = buildingService.saveBuilding(buildings);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newBuilding.getId()).toUri();
@@ -54,9 +55,10 @@ public class BuildingController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Buildings> putBuilding(@PathVariable UUID id, @RequestBody Map<String, Object> requestBody) {
-        Boolean restore = false;
-        Buildings buildings = null;
+    public ResponseEntity<Buildings> putBuilding(@Valid @PathVariable UUID id,
+                                                 @RequestBody Map<String, Object> requestBody) {
+        boolean restore = false;
+        Buildings buildings;
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             buildings = objectMapper.convertValue(requestBody, Buildings.class);

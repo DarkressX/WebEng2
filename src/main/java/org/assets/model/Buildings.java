@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,8 +16,10 @@ public class Buildings
     @Id
     private UUID id;
 
+    @NotBlank(message = "Building name is required")
     private String name;
 
+    @NotBlank(message = "Building address is required")
     private String address;
 
     @JsonAlias("deleted_at")

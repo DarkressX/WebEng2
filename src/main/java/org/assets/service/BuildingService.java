@@ -37,7 +37,7 @@ public class BuildingService
         return buildingRepository.save(newBuilding);
     }
 
-    public Buildings updateBuildingByID(UUID id, Buildings newBuilding, Boolean restore) {
+    public Buildings updateBuildingByID(UUID id, Buildings newBuilding, boolean restore) {
         Buildings oldBuilding = buildingRepository.findBuildingById(id);
         if(oldBuilding != null && oldBuilding.getDeletedAt() != null && !restore) {
             //Building is deleted but no
