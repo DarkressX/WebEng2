@@ -21,8 +21,11 @@ public class BuildingService
         this.buildingRepository = buildingRepository;
     }
 
-    public List<Buildings> getAllBuildings() {
-        return buildingRepository.findAll();
+    public List<Buildings> getAllBuildings(Boolean deleted_at) {
+        if(deleted_at) {
+            return buildingRepository.findAll();
+        }
+        return buildingRepository.findBuildingsByDeletedAtIsNull();
     }
 
     public Buildings getBuildingByID(UUID id) {

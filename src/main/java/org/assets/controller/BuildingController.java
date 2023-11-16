@@ -3,11 +3,7 @@ package org.assets.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assets.model.Buildings;
 import org.assets.service.BuildingService;
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,9 +21,9 @@ public class BuildingController
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Buildings>> getBuildings()
+    public ResponseEntity<List<Buildings>> getBuildings(@RequestParam(required = false, defaultValue = "false") Boolean include_deleted)
     {
-        return ResponseEntity.ok().body(buildingService.getAllBuildings());
+        return ResponseEntity.ok().body(buildingService.getAllBuildings(include_deleted));
     }
 
     @PostMapping("")
