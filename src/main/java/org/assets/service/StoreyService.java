@@ -45,7 +45,9 @@ public class StoreyService
 
     public Storeys updateStoreyByID(UUID id, Storeys newStorey, boolean restore) {
         Storeys oldStorey = storeyRepository.findStoreyById(id);
-        if(oldStorey != null && oldStorey.getDeletedAt() != null && !restore) {
+        Buildings building = buildingRepository.findBuildingById(newStorey.getBuildingID());
+        if(building == null || building.getDeletedAt() != null || oldStorey != null && oldStorey.getDeletedAt() != null && !restore) {
+            //TODO: Bug when both building and storey dont exist
             //Storey is deleted but no
             // restore was requested
             throw new UnsupportedOperationException();
