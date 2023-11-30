@@ -2,6 +2,7 @@ package org.assets.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +25,7 @@ public class Storeys
     private Buildings building;
 
     @JsonAlias("building_id")
+    @JsonProperty("building_id")
     @Column(name = "building_id")
     private UUID buildingID;
 
