@@ -46,14 +46,14 @@ public class Storeys
 
     public String getName() {return name;}
 
-    public LocalDateTime getDeletedAt()
-    {
-        return deletedAt;
-    }
-
     public UUID getBuildingID()
     {
         return buildingID;
+    }
+
+    public LocalDateTime getDeletedAt()
+    {
+        return deletedAt;
     }
 
     public void setId(UUID id)
@@ -61,16 +61,15 @@ public class Storeys
         this.id = id;
     }
 
-    public void setBuildingID(UUID buildingID)
-    {
-        this.buildingID = buildingID;
-    }
-
     public void setName(String name)
     {
         this.name = name;
     }
 
+    public void setBuildingID(UUID buildingID)
+    {
+        this.buildingID = buildingID;
+    }
 
     public void setDeletedAt(LocalDateTime deletedAt)
     {

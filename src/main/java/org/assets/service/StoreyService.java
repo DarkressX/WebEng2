@@ -46,12 +46,22 @@ public class StoreyService
     public Storeys updateStoreyByID(UUID id, Storeys newStorey, boolean restore) {
         Storeys oldStorey = storeyRepository.findStoreyById(id);
         Buildings building = buildingRepository.findBuildingById(newStorey.getBuildingID());
-        if(building == null || building.getDeletedAt() != null || oldStorey != null && oldStorey.getDeletedAt() != null && !restore) {
-            //TODO: Bug when both building and storey dont exist
+        if(building == null || building.getDeletedAt() != null) {
+            throw new IllegalArgumentException();
+        }
+        if(oldStorey != null && oldStorey.getDeletedAt() != null && !restore) {
             //Storey is deleted but no
             // restore was requested
             throw new UnsupportedOperationException();
         }
+        if(oldStorey == null) {
+            throw new NoSuchElementException();
+        }
+        newStorey.setId(id);
+        return storeyRepository.save(newStorey);
+    }
+
+    public Storeys saveStoreyByID(UUID id, Storeys newStorey) {
         newStorey.setId(id);
         return storeyRepository.save(newStorey);
     }

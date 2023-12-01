@@ -74,21 +74,19 @@ public class StoreyController
         catch(Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
         if(requestBody.containsKey("deleted_at") && requestBody.get("deleted_at") == null) {
             restore = true;
         }
-        if (storeyService.getStoreyByID(id) != null) {
-            try {
-                return ResponseEntity.ok().body(storeyService.updateStoreyByID(id, storeys, restore));
-            }
-            catch(UnsupportedOperationException e) {
-                return ResponseEntity.badRequest().build();
-            }
-        }
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
-        storeys.setId(id);
-        return ResponseEntity.created(uri).body(storeyService.updateStoreyByID(id, storeys, false));
+        try {
+            return ResponseEntity.ok().body(storeyService.updateStoreyByID(id, storeys, restore));
+        }
+        catch(UnsupportedOperationException | IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        catch(NoSuchElementException e) {
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
+            return ResponseEntity.created(uri).body(storeyService.saveStoreyByID(id, storeys));
+        }
     }
 }
