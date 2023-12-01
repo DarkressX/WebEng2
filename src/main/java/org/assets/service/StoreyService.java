@@ -71,6 +71,6 @@ public class StoreyService
         if(storey == null || storey.getDeletedAt() != null){
             throw new NoSuchElementException();
         }
-        storey.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if storeys exist in this storey
+        storey.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if room exist in this storey
     }
 }

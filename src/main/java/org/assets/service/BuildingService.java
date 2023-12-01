@@ -1,12 +1,13 @@
 package org.assets.service;
 
 import org.assets.model.Buildings;
+import org.assets.model.Storeys;
 import org.assets.repository.BuildingRepository;
-import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
+import org.assets.repository.StoreyRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -17,8 +18,11 @@ public class BuildingService
 {
     private final BuildingRepository buildingRepository;
 
-    public BuildingService(BuildingRepository buildingRepository) {
+    private final StoreyRepository storeyRepository;
+
+    public BuildingService(BuildingRepository buildingRepository, StoreyRepository storeyRepository) {
         this.buildingRepository = buildingRepository;
+        this.storeyRepository = storeyRepository;
     }
 
     public List<Buildings> getAllBuildings(Boolean deleted_at) {
@@ -52,6 +56,9 @@ public class BuildingService
         Buildings building = buildingRepository.findBuildingById(id);
         if(building == null || building.getDeletedAt() != null){
             throw new NoSuchElementException();
+        }
+        if(!storeyRepository.findStoreysByDeletedAtIsNullAndBuilding_Id(id).isEmpty()) {
+            throw new IllegalArgumentException();
         }
         building.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if storeys exist in this building
     }

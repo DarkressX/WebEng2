@@ -50,6 +50,8 @@ public class BuildingController
             buildingService.deleteBuilding(id);
         } catch(NoSuchElementException e) {
             return ResponseEntity.notFound().build(); //Building does not exist or already deleted
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.noContent().build();
     }
