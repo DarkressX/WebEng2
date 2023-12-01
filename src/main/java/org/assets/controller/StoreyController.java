@@ -80,7 +80,8 @@ public class StoreyController
         }
         if (storeyService.getStoreyByID(id) != null) {
             try {
-                return ResponseEntity.ok().body(storeyService.updateStoreyByID(id, storeys, restore));
+                Storeys story = storeyService.updateStoreyByID(id, storeys, restore);
+                return ResponseEntity.ok().body(story);
             }
             catch(UnsupportedOperationException e) {
                 return ResponseEntity.badRequest().build();
