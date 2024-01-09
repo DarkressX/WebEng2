@@ -1,0 +1,18 @@
+meta {
+  name: Create Rooms
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/v2/assets/rooms
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "001",
+    "storey_id": "4d716050-700c-4d46-9d5b-7b7a734780e9"
+  }
+}

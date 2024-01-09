@@ -1,0 +1,26 @@
+meta {
+  name: Update Building
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:8080/api/v2/assets/storeys/281b0e7f-a356-40de-b1c8-44e68dd2daa4
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"2nd Floor",
+    "building_id": "057cbe6a-c55f-474e-ba50-9c8390f07a82",
+    "deleted_at": null
+  }
+}
+
+tests {
+  test("put new storey", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(201);
+  });
+}
