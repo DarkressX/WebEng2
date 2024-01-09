@@ -3,6 +3,7 @@ package org.assets.service;
 import org.assets.model.Buildings;
 import org.assets.model.Storeys;
 import org.assets.repository.BuildingRepository;
+import org.assets.repository.RoomRepository;
 import org.assets.repository.StoreyRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ public class StoreyService
 {
     private final StoreyRepository storeyRepository;
     private final BuildingRepository buildingRepository;
+    private final RoomRepository roomRepository;
 
-    public StoreyService(StoreyRepository storeyRepository, BuildingRepository buildingRepository) {
+    public StoreyService(StoreyRepository storeyRepository, BuildingRepository buildingRepository, RoomRepository roomRepository) {
         this.storeyRepository = storeyRepository;
         this.buildingRepository = buildingRepository;
+        this.roomRepository = roomRepository;
     }
 
     public List<Storeys> getAllStoreys(Boolean include_deleted, UUID building_id) {
@@ -70,6 +73,9 @@ public class StoreyService
         Storeys storey = storeyRepository.findStoreyById(id);
         if(storey == null || storey.getDeletedAt() != null){
             throw new NoSuchElementException();
+        }
+        if(!roomRepository.findRoomsByDeletedAtIsNullAndStorey_Id(id).isEmpty()) {
+            throw new IllegalArgumentException();
         }
         storey.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if room exist in this storey
     }

@@ -58,6 +58,8 @@ public class StoreyController
             storeyService.deleteStorey(id);
         } catch(NoSuchElementException e) {
             return ResponseEntity.notFound().build(); //Storey does not exist or already deleted
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.noContent().build();
     }
