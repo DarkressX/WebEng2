@@ -60,6 +60,6 @@ public class BuildingService
         if(!storeyRepository.findStoreysByDeletedAtIsNullAndBuilding_Id(id).isEmpty()) {
             throw new IllegalArgumentException();
         }
-        building.setDeletedAt(java.time.LocalDateTime.now()); //TODO: Check if storeys exist in this building
+        building.setDeletedAt(java.time.LocalDateTime.now());
     }
 }

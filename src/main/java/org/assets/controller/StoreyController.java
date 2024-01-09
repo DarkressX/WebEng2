@@ -31,7 +31,7 @@ public class StoreyController
     }
 
     @PostMapping("")
-    public ResponseEntity<Storeys> saveStorey(@RequestBody Storeys storeys) {
+    public ResponseEntity<Storeys> saveStorey(@Valid @RequestBody Storeys storeys) {
         Storeys newStorey;
         try {
             newStorey = storeyService.saveStorey(storeys);
