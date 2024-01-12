@@ -30,6 +30,7 @@ public class Storeys
     private UUID buildingID;
 
     @JsonAlias("deleted_at")
+    @JsonProperty("deleted_at")
     private LocalDateTime deletedAt;
 
     public Storeys(UUID id, String name, UUID buildingID, LocalDateTime deletedAt)
