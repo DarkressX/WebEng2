@@ -6,25 +6,25 @@ import java.util.List;
 
 public class Status
 {
-    private List<String> name;
+    private List<String> authors;
 
     @JsonProperty("api_version")
     private String apiVersion;
 
-    public List<String> getName()
+    public List<String> getAuthors()
     {
-        return name;
+        return authors;
     }
 
-    public Status(List<String> name, String apiVersion)
+    public Status(List<String> authors, String apiVersion)
     {
-        this.name = name;
+        this.authors = authors;
         this.apiVersion = apiVersion;
     }
 
-    public void setName(List<String> name)
+    public void setAuthors(List<String> authors)
     {
-        this.name = name;
+        this.authors = authors;
     }
 
     public String getApiVersion()
