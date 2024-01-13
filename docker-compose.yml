@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  db:
+    image: docker.io/postgres
+    container_name: postgres
+    restart: always
+    ports:
+     - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: LxTgAb27s8PXYtwsjmJ4fGFQ7RNSZaWLQCsvNGvQ
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+  assets:
+    image: localhost/assets:latest
+    container_name: assets
+    restart: always
+    ports:
+     - "8080:8080"
+    environment:
+      - spring_datasource_url=jdbc:postgresql://postgres:5432/assets
