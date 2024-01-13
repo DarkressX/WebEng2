@@ -17,4 +17,5 @@ jobs:
         uses: super-linter/super-linter@v5.7.2 
         env:
           DEFAULT_BRANCH: main
+          FILTER_REGEX_INCLUDE: .*Dockerfile* 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
